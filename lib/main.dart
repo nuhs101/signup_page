@@ -92,7 +92,6 @@ class SignupScreenState extends State<SignupScreen> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState?.saveAndValidate() ?? false) {
-                    // Step 4 & 5: Handle form submission and navigate to confirmation screen
                     final formData = _formKey.currentState!.value;
                     Navigator.push(
                       context,
@@ -101,7 +100,6 @@ class SignupScreenState extends State<SignupScreen> {
                       ),
                     );
                   } else {
-                    // If the form is invalid, show error messages.
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Please correct the errors in the form')),
                     );
@@ -123,7 +121,6 @@ class ConfirmationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Format the date of birth if available
     String dob = '';
     if (formData['dob'] != null && formData['dob'] is DateTime) {
       DateTime date = formData['dob'];
