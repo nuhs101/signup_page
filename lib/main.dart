@@ -38,7 +38,6 @@ class SignupScreenState extends State<SignupScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Name Field
               FormBuilderTextField(
                 name: 'name',
                 decoration: const InputDecoration(labelText: 'Full Name'),
@@ -48,7 +47,6 @@ class SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 10),
 
-              // Email Field (Built-in Email Validation)
               FormBuilderTextField(
                 name: 'email',
                 decoration: const InputDecoration(labelText: 'Email Address'),
@@ -62,7 +60,6 @@ class SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 10),
 
-              // Date of Birth Field
               FormBuilderDateTimePicker(
                 name: 'dob',
                 inputType: InputType.date,
@@ -75,7 +72,6 @@ class SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 10),
 
-              // Password Field with Strong Validation
               FormBuilderTextField(
                 name: 'password',
                 decoration: const InputDecoration(labelText: 'Password'),
@@ -88,19 +84,16 @@ class SignupScreenState extends State<SignupScreen> {
                     8,
                     errorText: 'Password must be at least 8 characters',
                   ),
+
                   FormBuilderValidators.match(
-                    r'^(?=.*[A-Z])' as RegExp,
-                    errorText: 'Must contain at least one uppercase letter',
-                  ),
-                  FormBuilderValidators.match(
-                    r'^(?=.*\d)' as RegExp,
-                    errorText: 'Must contain at least one number',
+                    RegExp('^(?=.*[A-Z])(?=.*d)'),
+                    errorText:
+                        'Password must contain at least one uppercase letter and one number',
                   ),
                 ]),
               ),
               const SizedBox(height: 20),
 
-              // Submit Button
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState?.saveAndValidate() ?? false) {
