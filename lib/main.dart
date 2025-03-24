@@ -6,7 +6,7 @@ void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -46,7 +46,6 @@ class SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-
               FormBuilderTextField(
                 name: 'email',
                 decoration: const InputDecoration(labelText: 'Email Address'),
@@ -59,7 +58,6 @@ class SignupScreenState extends State<SignupScreen> {
                 ]),
               ),
               const SizedBox(height: 10),
-
               FormBuilderDateTimePicker(
                 name: 'dob',
                 inputType: InputType.date,
@@ -71,7 +69,6 @@ class SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-
               FormBuilderTextField(
                 name: 'password',
                 decoration: const InputDecoration(labelText: 'Password'),
@@ -84,7 +81,6 @@ class SignupScreenState extends State<SignupScreen> {
                     8,
                     errorText: 'Password must be at least 8 characters',
                   ),
-
                   FormBuilderValidators.match(
                     RegExp(r'^(?=.*[A-Z])(?=.*\d).{8,}$'),
                     errorText:
@@ -93,12 +89,21 @@ class SignupScreenState extends State<SignupScreen> {
                 ]),
               ),
               const SizedBox(height: 20),
-
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState?.saveAndValidate() ?? false) {
+                    // Step 4 & 5: Handle form submission and navigate to confirmation screen
+                    final formData = _formKey.currentState!.value;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ConfirmationScreen(formData: formData),
+                      ),
+                    );
+                  } else {
+                    // If the form is invalid, show error messages.
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Signup Successful!')),
+                      const SnackBar(content: Text('Please correct the errors in the form')),
                     );
                   }
                 },
@@ -106,6 +111,40 @@ class SignupScreenState extends State<SignupScreen> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class ConfirmationScreen extends StatelessWidget {
+  final Map<String, dynamic> formData;
+  const ConfirmationScreen({Key? key, required this.formData}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // Format the date of birth if available
+    String dob = '';
+    if (formData['dob'] != null && formData['dob'] is DateTime) {
+      DateTime date = formData['dob'];
+      dob = '${date.month}/${date.day}/${date.year}';
+    }
+    return Scaffold(
+      appBar: AppBar(title: const Text('Confirmation')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Signup Successful!',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            Text('Name: ${formData['name']}'),
+            Text('Email: ${formData['email']}'),
+            Text('Date of Birth: $dob'),
+          ],
         ),
       ),
     );
