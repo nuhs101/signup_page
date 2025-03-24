@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: appTitle,
       home: Scaffold(
         appBar: AppBar(title: const Text(appTitle)),
-        body: const MyCustomForm(),
+        body: const MySignupForm(),
       ),
     );
   }
@@ -42,6 +42,30 @@ class MySignupFormState extends State<MySignupForm> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+          TextFormField(
+            controller: _dobController,
+            decoration: const InputDecoration(labelText: 'Date of Birth'),
+            readOnly: true,
+            onTap: () async {
+              DateTime? pickedDate = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(1900),
+                lastDate: DateTime.now(),
+              );
+              if (pickedDate != null) {
+                setState(() {
+                  _dobController.text = "${pickedDate.toLocal()}".split(' ')[0];
+                });
+              }
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please select your date of birth';
               }
               return null;
             },
