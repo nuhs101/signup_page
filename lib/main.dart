@@ -86,7 +86,7 @@ class SignupScreenState extends State<SignupScreen> {
                   ),
 
                   FormBuilderValidators.match(
-                    RegExp('^(?=.*[A-Z])(?=.*d)'),
+                    RegExp(r'^(?=.*[A-Z])(?=.*\d).{8,}$'),
                     errorText:
                         'Password must contain at least one uppercase letter and one number',
                   ),
