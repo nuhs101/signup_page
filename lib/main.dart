@@ -18,25 +18,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Create a Form widget.
-class MyCustomForm extends StatefulWidget {
-  const MyCustomForm({super.key});
+class MySignupForm extends StatefulWidget {
+  const MySignupForm({super.key});
 
   @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
-  }
+  MySignupFormState createState() => MySignupFormState();
 }
 
-// Create a corresponding State class.
-// This class holds data related to the form.
-class MyCustomFormState extends State<MyCustomForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
+class MySignupFormState extends State<MySignupForm> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _dobController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
