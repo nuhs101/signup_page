@@ -119,7 +119,7 @@ class SignupScreenState extends State<SignupScreen> {
 
 class ConfirmationScreen extends StatelessWidget {
   final Map<String, dynamic> formData;
-  const ConfirmationScreen({Key? key, required this.formData}) : super(key: key);
+  const ConfirmationScreen({super.key, required this.formData});
 
   @override
   Widget build(BuildContext context) {
